@@ -1,0 +1,62 @@
+library(tidyverse)
+library(dplyr)
+library(MASS)
+require(MASS)
+require(dplyr)
+library(plotly)
+library(reshape2)
+library(lubridate)
+
+install.packages("bindrcpp")
+library(bindrcpp)
+
+
+getwd()
+setwd("C:/Users/student/Documents/R")
+world<- read.csv("2016worldhappy.csv")
+
+
+world1 <- world%>%
+  dplyr::select(Country,Region, Happiness.Score, Economy..GDP.per.Capita.,
+                Family,
+                Health..Life.Expectancy.,Freedom, Generosity, 
+                Trust..Government.Corruption., Dystopia.Residual)%>%
+  rename(GDP.Score = Economy..GDP.per.Capita.,
+         Family.Score = Family,
+         Health.Score = Health..Life.Expectancy., 
+         Trust.Score = Trust..Government.Corruption.)
+
+isolate.world1<- world1%>% 
+  dplyr::select(Country,Region, Happiness.Score, 
+                Dystopia.Residual)%>%mutate(DystopiaResidual=(Dystopia.Residual-1.85))%>%
+  group_by(Region)
+
+
+ fill.gdp <- plot_ly( 
+           type = 'scatter',
+           x = isolate.world1$DystopiaResidual,
+           y = isolate.world1$Happiness.Score,
+           mode = 'markers',
+           color = isolate.world1$Region,
+           opacity = 0.85)
+
+ f <- list(
+ 
+   size = 12
+  )
+
+      
+  final.plot<- fill.gdp %>%
+     layout(
+       title = "Comparing 2016 Happiness Score against Residual", font = f,
+      xaxis = list(title = "Residual"),
+       yaxis = list(title = "Happiness Score"),
+       updatemenus =
+            list(
+              list( type = "buttons",
+                     y=0.5
+                    
+                        ))
+  
+)
+final.plot
