@@ -1,0 +1,132 @@
+setwd("~/Desktop/UVA/VDOT")
+
+## Locallinks
+locallinks <- read.table("1) LocalLinks.txt", header = TRUE, sep = ",")
+locallinks[1:10,]
+nrow(locallinks)
+colnames(locallinks) <- c("linkid", "cycle")
+summary(locallinks$cycle)
+
+## Jurisdiction
+jurisdiction <- read.table("2) JURISDICTIONCOUNTCYCLE.txt", header = TRUE)
+jurisdiction[1:10,]
+
+summary(jurisdiction$COUNTCYCLE)
+
+## Cycleyear
+cycleyear <- read.table("4) CYCLEYEAR.txt", header = TRUE)
+cycleyear[1:10,]
+
+## Localroadvpd
+localroadvpd <- read.table("5) localroadvpd_09to17_TEDlinks.txt", header = TRUE, sep = "^")
+localroadvpd[1:10,]
+length(unique(localroadvpd$linkid))
+nrow(localroadvpd)
+summary(localraodvpd)
+
+## Vdot district
+
+library(dplyr)
+
+vdotdistrict <- read.table("1c) Locallinkswithphysicaljurisdiction_Functionalclass_District.txt", header = TRUE, sep = ",")
+vdotdistrict <- vdotdistrict %>% select(LinkID, vdotDistrict)
+colnames(vdotdistrict) <- c("linkid", "vdotdistrict")
+vdotdistrict[1:10,]
+nrow(vdotdistrict)
+summary(vdotdistrict)
+summary(vdotdistrict$vdotDistrict)
+
+# number of road links in locallinks and localroadvpd
+length(locallinks$linkid)
+length(unique(localroadvpd$linkid))
+
+## Innerjoin Locallinks and Localraodvpd
+
+library(tidyverse)
+
+data <- localroadvpd %>% inner_join(locallinks, by = "linkid")
+data[1:10,]
+
+summary(data)
+
+data <- data %>%
+  group_by(linkid) %>%
+  mutate(samevpd = (length(unique(vpd))/length(unique(vpd_yr)))) %>%
+  mutate(meanvpd = (mean(vpd)))
+
+summary(data$meanvpd)
+
+nrow(data)
+
+summary(data$samevpd)
+hist(data$samevpd)
+
+eachsamevpd <- data$samevpd[seq(1, nrow(data), 10)]
+summary(eachsamevpd)
+hist(eachsamevpd)
+
+data[1,]
+
+byjurisdiction = data %>%
+  group_by(cycle, linkid) %>%
+  mutate(count = n())
+
+groupedbycycle = data %>%
+  group_by(cycle, linkid) %>%
+  mutate(count = n())
+
+# Cycles
+
+cycle3 = subset(data,cycle==3)
+summary(cycle3)
+hist(cycle3$vpd)
+nrow(cycle3)
+nrow(subset(cycle3, (vpd <= 49) & (vpd >= 40)))
+
+cycle6 = subset(data,cycle==6)
+summary(cycle6)
+nrow(cycle6)/9
+hist(cycle6$vpd)
+
+cycle12 = subset(data,cycle==12)
+summary(cycle12)
+hist(cycle12$vpd)
+nrow(cycle12)/9
+nrow(cycle12$vpd)
+
+# innerjoin data with vdotdistrict
+
+data <- data %>% inner_join(vdotdistrict, by='linkid')
+data[1:10,]
+
+# Urban and Rural subsets
+urban <- subset(data, functionalclass == 'J')
+rural <- subset(data, functionalclass == '6')
+nrow(urban)/9
+nrow(rural)/9
+hist(urban$meanvpd)
+hist(rural$meanvpd)
+
+# QQplot of Urban and Rural meanvpd
+qqnorm(urban$meanvpd, main = "Urban Mean VPD")
+qqnorm(rural$meanvpd, main = "Rural Mean VPD")
+
+# Urban and Rural lengths
+length(urban$meanvpd[(urban$meanvpd < 5000) == "TRUE"])
+length(urban$meanvpd[((urban$meanvpd >= 5000) & (urban$meanvpd < 20000)) == "TRUE"])
+length(urban$meanvpd[(urban$meanvpd > 20000) == "TRUE"])
+
+length(rural$meanvpd[(rural$meanvpd < 5000) == "TRUE"])
+length(rural$meanvpd[((rural$meanvpd >= 40) & (rural$meanvpd < 49)) == "TRUE"]) / 9
+length(rural$meanvpd[(rural$meanvpd < 49) == "TRUE"]) / 9
+
+nrow(subset(urban, cycle == 12))
+rural12 = subset(rural, cycle == 12)
+rural4049 = subset(rural, (rural$meanvpd >= 40) & (rural$meanvpd < 49))
+
+common <- intersect(rural12$linkid, rural4049$linkid)
+length(common)
+rural12[common,] # give you common rows in data frame 1  
+rural4049[common,]
+
+nrow(subset(urban, cycle == 12))/9
