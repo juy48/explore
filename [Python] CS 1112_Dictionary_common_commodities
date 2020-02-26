@@ -1,0 +1,32 @@
+# get url reading abilities
+import url
+
+# where is the commodity cost mappings
+COMMODITIES_CSV = 'http://www.cs.virginia.edu/~cs1112/datasets/csv/commodities.csv'
+
+# get web-based commodities dataset 
+dataset = url.get_csv_dataset( COMMODITIES_CSV )
+
+# convert dataset into commodity cost mappings dictionary
+commodity_mappings = {}
+for row in dataset:
+    commodity, price = row
+    commodity_mappings[ commodity ] = price
+
+# while user is supplying queries, process them. user indicates no more
+# queries by not entering an empty response
+
+looking_for_commodity = True
+
+while ( looking_for_commodity ):
+    user_commodity = input('Enter commodity: ')
+    user_commodity = user_commodity.lower()
+    if ( user_commodity in commodity_mappings.keys() ):
+        output = commodity_mappings[ user_commodity ]
+        print(output)
+        print()
+    if (user_commodity == " "):
+        looking_for_commodity = False
+    elif (user_commodity not in commodity_mappings.keys() ):
+        print('pricing unknown')
+        print()
