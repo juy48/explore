@@ -1,0 +1,148 @@
+data cereals;
+input Name $ Rating Manufacturer $ Calories Protein Fat Fiber Carbs Sugars shelf $;
+cards;
+100%_Bran 68.4 N 70 4 1 10 5 6 3
+100%_Natural_Bran 34 Q 120 3 5 2 8 8 3
+All-Bran 59.4 K 70 4 1 9 7 5 3
+All-Bran_with_Extra_Fiber 93.7 K 50 4 0 14 8 0 3
+Almond_Delight 34.4 R 110 2 2 1 14 8 3
+Apple_Cinnamon_Cheerios 29.5 G 110 2 2 1.5 10.5 10 1
+Apple_Jacks 33.2 K 110 2 0 1 11 14 2
+Basic_4 37 G 130 3 2 2 18 8 3
+Bran_Chex 49.1 R 90 2 1 4 15 6 1
+Bran_Flakes 53.3 P 90 3 0 5 13 5 3
+Cap'n'Crunch 18 Q 120 1 2 0 12 12 2
+Cheerios 50.8 G 110 6 2 2 17 1 1
+Cinnamon_Toast_Crunch 19.8 G 120 1 3 0 13 9 2
+Clusters 40.4 G 110 3 2 2 13 7 3
+Cocoa_Puffs 22.7 G 110 1 1 0 12 13 2
+Corn_Chex 41.4 R 110 2 0 0 22 3 1
+Corn_Flakes 45.9 K 100 2 0 1 21 2 1
+Corn_Pops 35.8 K 110 1 0 1 13 12 2
+Count_Chocula 22.4 G 110 1 1 0 12 13 2
+Cracklin_Oat_Bran 40.4 K 110 3 3 4 10 7 3
+Cream_of_Wheat_(Quick) 64.5 N 100 3 0 1 21 0 2
+Crispix 46.9 K 110 2 0 1 21 3 3
+Crispy_Wheat_&_Raisins 36.2 G 100 2 1 2 11 10 3
+Double_Chex 44.3 R 100 2 0 1 18 5 3
+Froot_Loops 32.2 K 110 2 1 1 11 13 2
+Frosted_Flakes 31.4 K 110 1 0 1 14 11 1
+Frosted_Mini-Wheats 58.3 K 100 3 0 3 14 7 2
+Fruit_&_Fibre_Dates,_Walnuts,_and_Oats 40.9 P 120 3 2 5 12 10 3
+Fruitful_Bran 41 K 120 3 0 5 14 12 3
+Fruity_Pebbles 28 P 110 1 1 0 13 12 2
+Golden_Crisp 35.3 P 100 2 0 0 11 15 1
+Golden_Grahams 23.8 G 110 1 1 0 15 9 2
+Grape_Nuts_Flakes 52.1 P 100 3 1 3 15 5 3
+Grape-Nuts 53.4 P 110 3 0 3 17 3 3
+Great_Grains_Pecan 45.8 P 120 3 3 3 13 4 3
+Honey_Graham_Ohs 21.9 Q 120 1 2 1 12 11 2
+Honey_Nut_Cheerios 31.1 G 110 3 1 1.5 11.5 10 1
+Honey-comb 28.7 P 110 1 0 0 14 11 1
+Just_Right_Crunchy__Nuggets 36.5 K 110 2 1 1 17 6 3
+Just_Right_Fruit_&_Nut 36.5 K 140 3 1 2 20 9 3
+Kix 39.2 G 110 2 1 0 21 3 2
+Life 45.3 Q 100 4 2 2 12 6 2
+Lucky_Charms 26.7 G 110 2 1 0 12 12 2
+Maypo 54.9 A 100 4 1 0 16 3 2
+Muesli_Raisins,_Dates,_&_Almonds 37.1 R 150 4 3 3 16 11 3
+Muesli_Raisins,_Peaches,_&_Pecans 34.1 R 150 4 3 3 16 11 3
+Mueslix_Crispy_Blend 30.3 K 160 3 2 3 17 13 3
+Multi-Grain_Cheerios 40.1 G 100 2 1 2 15 6 1
+Nut&Honey_Crunch 29.9 K 120 2 1 0 15 9 2
+Nutri-Grain_Almond-Raisin 40.7 K 140 3 2 3 21 7 3
+Nutri-grain_Wheat 59.6 K 90 3 0 3 18 2 3
+Oatmeal_Raisin_Crisp 30.5 G 130 3 2 1.5 13.5 10 3
+Post_Nat._Raisin_Bran 37.8 P 120 3 1 6 11 14 3
+Product_19 41.5 K 100 3 0 1 20 3 3
+Puffed_Rice 60.8 Q 50 1 0 0 13 0 3
+Puffed_Wheat 63 Q 50 2 0 1 10 0 3
+Quaker_Oat_Squares 49.5 Q 100 4 1 2 14 6 3
+Quaker_Oatmeal 50.8 Q 100 5 2 2.7 -1 -1 1
+Raisin_Bran 39.3 K 120 3 1 5 14 12 2
+Raisin_Nut_Bran 39.7 G 100 3 2 2.5 10.5 8 3
+Raisin_Squares 55.3 K 90 2 0 2 15 6 3
+Rice_Chex 42 R 110 1 0 0 23 2 1
+Rice_Krispies 40.6 K 110 2 0 0 22 3 1
+Shredded_Wheat 68.2 N 80 2 0 3 16 0 1
+Shredded_Wheat_'n'Bran 74.5 N 90 3 0 4 19 0 1
+Shredded_Wheat_spoon_size 72.8 N 90 3 0 3 20 0 1
+Smacks 31.2 K 110 2 1 1 9 15 2
+Special_K 53.1 K 110 6 0 1 16 3 1
+Strawberry_Fruit_Wheats 59.4 N 90 2 0 3 15 5 2
+Total_Corn_Flakes 38.8 G 110 2 1 0 21 3 3
+Total_Raisin_Bran 28.6 G 140 3 1 4 15 14 3
+Total_Whole_Grain 46.7 G 100 3 1 3 16 3 3
+Triples 39.1 G 110 2 1 0 21 3 3
+Trix 27.8 G 110 1 1 0 13 12 2
+Wheat_Chex 49.8 R 100 3 1 3 17 3 1
+Wheaties 51.6 G 100 3 1 3 17 3 1
+Wheaties_Honey_Gold 36.2 G 110 2 1 1 16 8 1
+Lucky_Charms_Frosted_Flakes . G 120 1 0.5 1 27 10 2
+Blasted_Shreds_Cereal_Cinnamon_Toast_Crunch . G 230 4 4.5 7 44 13 2
+;
+
+proc sgplot data=cereals;
+scatter y=rating x=manufacturer;
+run;	*yes;
+
+proc sgplot data=cereals;
+scatter y=rating x=calories;
+run;	*linear;
+
+proc sgplot data=cereals;
+scatter y=rating x=protein;
+run;
+
+proc sgplot data=cereals;
+scatter y=rating x=fat;
+run;	*linear;
+
+proc sgplot data=cereals;
+scatter y=rating x=fiber;
+run;	*linear;
+
+proc sgplot data=cereals;
+scatter y=rating x=carbs;
+run;
+
+proc sgplot data=cereals;
+scatter y=rating x=sugars;
+run;	*linear;
+
+proc sgplot data=cereals;
+scatter y=rating x=shelf;
+run;	*yes;
+
+
+
+proc reg data=cereals plots=none;
+model rating = manufacturer calories fat fiber sugars shelf;
+run;
+
+
+data cereals1;
+set cereals;
+manudumN = 0;
+manudumQ = 0;
+manudumK = 0;
+manudumR = 0;
+manudumG = 0;
+manudumP = 0;
+protein2 = protein*protein;
+if manufacturer = 'N' then manudumN = 1;
+if manufacturer = 'Q' then manudumQ = 1;
+if manufacturer = 'K' then manudumK = 1;
+if manufacturer = 'R' then manudumR = 1;
+if manufacturer = 'G' then manudumG = 1;
+if manufacturer = 'P' then manudumP = 1;
+shelf1 = 0;
+shelf2 = 0;
+if shelf = '1' then shelf1 = 1;
+if shelf = '2' then shelf2 = 2;
+run;
+
+
+proc reg data=cereals1 plots=none;
+model rating = shelf1 shelf2 calories protein fat fiber sugars manudumN manudumQ manudumK manudumR manudumG manudumP;
+run;

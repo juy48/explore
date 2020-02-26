@@ -1,0 +1,423 @@
+*Read in data;
+data delays;
+input Carrier$ City$ State$ AirportCode$ Airport$ Delayed Cancelled Diverted Ontime;
+cards;
+Alaska St.Louis MO STL LambertSt.LouisInternational 4 0 0 27
+JetBlue Pittsburgh PA PIT PittsburghInternational 24 0 0 95
+SkyWest Boston MA BOS LoganInternational 20 2 0 55
+SkyWest Lansing MI LAN CapitalRegionInternational 1 1 0 26
+American SanDiego CA SAN SanDiegoInternational 150 3 0 365
+AirTran Washington DC DCA RonaldReaganWashingtonNational 37 1 1 174
+Envoy Montrose/Delta CO MTJ MontroseRegional 4 0 1 26
+JetBlue Jacksonville FL JAX JacksonvilleInternational 66 7 1 112
+Hawaiian Honolulu HI HNL HonoluluInternational 206 4 2 2696
+ExpressJet Akron OH CAK AkronCantonRegional 24 1 0 71
+JetBlue Oakland CA OAK MetropolitanOaklandInternational 46 3 0 137
+Frontier Houston TX IAH GeorgeBushIntercontinental/Houston 13 0 0 40
+Delta RapidCity SD RAP RapidCityRegional 4 0 0 26
+ExpressJet WhitePlains NY HPN WestchesterCounty 96 5 4 176
+AirTran FortMyers FL RSW SouthwestFloridaInternational 38 0 0 179
+Frontier NewportNews/Williamsburg VA PHF NewportNews/WilliamsburgInternational 3 0 0 19
+Frontier Anchorage AK ANC TedStevensAnchorageInternational 9 0 1 21
+Envoy Mosinee WI CWA CentralWisconsin 15 0 0 43
+Envoy Waco TX ACT WacoRegional 24 4 0 92
+USAirways Columbus OH CMH PortColumbusInternational 8 0 0 54
+Envoy Knoxville TN TYS McGheeTyson 54 6 0 143
+USAirways Raleigh/Durham NC RDU RaleighDurhamInternational 95 7 2 327
+Hawaiian Hilo HI ITO HiloInternational 32 0 0 461
+AirTran St.Louis MO STL LambertSt.LouisInternational 14 0 0 74
+Envoy Syracuse NY SYR SyracuseHancockInternational 37 2 0 110
+Delta Spokane WA GEG SpokaneInternational 15 0 0 191
+USAirways WestPalmBeach/PalmBeach FL PBI PalmBeachInternational 52 0 0 130
+ExpressJet Tampa FL TPA TampaInternational 0 0 0 5
+USAirways Oakland CA OAK MetropolitanOaklandInternational 20 0 0 64
+JetBlue WestPalmBeach/PalmBeach FL PBI PalmBeachInternational 174 14 3 224
+United Houston TX IAH GeorgeBushIntercontinental/Houston 1117 66 34 4183
+American Philadelphia PA PHL PhiladelphiaInternational 85 4 3 182
+Hawaiian SanJose CA SJC NormanY.MinetaSanJoseInternational 7 0 0 55
+Envoy KeyWest FL EYW KeyWestInternational 12 1 0 138
+SkyWest Williston ND ISN SloulinFieldInternational 9 1 1 97
+Hawaiian Kahului HI OGG KahuluiAirport 63 1 1 1218
+United GrandRapids MI GRR GeraldR.FordInternational 20 0 0 41
+Envoy CollegeStation/Bryan TX CLL EasterwoodField 15 6 0 67
+Southwest Harlingen/SanBenito TX HRL ValleyInternational 49 0 0 126
+SkyWest NewYork NY LGA LaGuardia 6 2 0 36
+Frontier Fargo ND FAR HectorInternational 8 0 0 9
+Southwest Islip NY ISP LongIslandMacArthur 149 1 0 253
+JetBlue LongBeach CA LGB LongBeachAirport 183 3 1 729
+ExpressJet Pittsburgh PA PIT PittsburghInternational 43 1 1 101
+Envoy Gainesville FL GNV GainesvilleRegional 13 0 0 49
+AirTran Richmond VA RIC RichmondInternational 11 1 0 107
+American St.Louis MO STL LambertSt.LouisInternational 134 3 1 404
+United Jackson WY JAC JacksonHole 43 1 0 95
+Southwest Memphis TN MEM MemphisInternational 93 0 2 114
+ExpressJet ColoradoSprings CO COS CityofColoradoSpringsMunicipal 20 0 0 121
+ExpressJet Mobile AL MOB MobileRegional 70 3 1 272
+Southwest Portland ME PWM PortlandInternationalJetport 39 0 0 80
+ExpressJet Nashville TN BNA NashvilleInternational 217 34 0 462
+American Jacksonville FL JAX JacksonvilleInternational 47 1 0 74
+Frontier SantaAna CA SNA JohnWayneAirportOrangeCounty 14 0 1 109
+ExpressJet Augusta GA AGS AugustaRegionalatBushField 27 3 0 144
+Delta Mobile AL MOB MobileRegional 4 0 0 51
+Alaska SantaAna CA SNA JohnWayneAirportOrangeCounty 40 1 1 254
+AirTran OklahomaCity OK OKC WillRogersWorld 12 0 0 50
+United KansasCity MO MCI KansasCityInternational 13 0 0 14
+Southwest LosAngeles CA LAX LosAngelesInternational 1141 78 2 2364
+United Minneapolis MN MSP MinneapolisStPaulInternational 21 1 0 60
+USAirways Kona HI KOA KonaInternationalAirportatKeahole 3 1 0 27
+USAirways SantaAna CA SNA JohnWayneAirportOrangeCounty 21 0 0 103
+Delta Seattle WA SEA Seattle/TacomaInternational 155 1 0 1053
+Alaska Ontario CA ONT OntarioInternational 19 0 0 74
+JetBlue MarthasVineyard MA MVY MarthasVineyardAirport 15 2 0 27
+Delta Buffalo NY BUF BuffaloNiagaraInternational 17 0 1 213
+American Tampa FL TPA TampaInternational 119 3 4 301
+SkyWest Minot ND MOT MinotInternational 36 2 1 76
+SkyWest Bemidji MN BJI BemidjiRegional 5 2 0 55
+SkyWest Birmingham AL BHM BirminghamShuttlesworthInternational 16 3 1 19
+SkyWest Vernal UT VEL VernalRegional 1 1 0 52
+SkyWest Medford OR MFR RogueValleyInternationalMedford 36 15 0 197
+Frontier Minneapolis MN MSP MinneapolisStPaulInternational 42 0 0 109
+United Orlando FL MCO OrlandoInternational 270 6 5 824
+Delta Chicago IL ORD ChicagoOHareInternational 83 0 0 486
+ExpressJet Manchester NH MHT ManchesterBostonRegional 40 5 0 119
+American NewYork NY JFK JohnF.KennedyInternational 349 27 15 960
+SkyWest LosAngeles CA LAX LosAngelesInternational 829 39 1 4124
+Delta LasVegas NV LAS McCarranInternational 139 0 0 825
+Envoy Chattanooga TN CHA LovellField 15 2 1 72
+Delta NewOrleans LA MSY LouisArmstrongNewOrleansInternational 72 1 0 497
+Frontier Minot ND MOT MinotInternational 4 0 0 10
+American Birmingham AL BHM BirminghamShuttlesworthInternational 25 1 0 31
+Delta Portland ME PWM PortlandInternationalJetport 10 0 0 83
+Envoy Moline IL MLI QuadCityInternational 38 3 0 102
+Envoy BatonRouge LA BTR BatonRougeMetropolitan/RyanField 35 6 0 136
+Southwest Charleston SC CHS CharlestonAFB/International 86 0 0 156
+Southwest Albany NY ALB AlbanyInternational 150 2 0 217
+Envoy Minneapolis MN MSP MinneapolisStPaulInternational 16 1 0 10
+SkyWest Springfield MO SGF SpringfieldBransonNational 17 1 0 13
+American Lihue HI LIH LihueAirport 9 0 0 53
+Virgin Chicago IL ORD ChicagoOHareInternational 30 0 0 119
+SkyWest CedarCity UT CDC CedarCityRegional 8 0 0 46
+Alaska Gustavus AK GST GustavusAirport 5 5 0 21
+Alaska Cordova AK CDV MerleKMudholeSmith 10 0 0 52
+Frontier SanDiego CA SAN SanDiegoInternational 15 0 0 105
+Envoy FortWayne IN FWA FortWayneInternational 32 2 0 143
+ExpressJet Milwaukee WI MKE GeneralMitchellInternational 44 15 0 182
+;
+run;
+
+*Remove Airport variables;
+data delays1 (DROP=Airport);
+set delays;
+run;
+
+
+*Add Airport variable that shows strings of maximum 50 characters so that
+the data reads the full airport name;
+data delays2;
+set delays1;
+input Airportnames$50.;
+cards;
+LambertSt.LouisInternational
+PittsburghInternational
+LoganInternational
+CapitalRegionInternational
+SanDiegoInternational
+RonaldReaganWashingtonNational
+MontroseRegional
+JacksonvilleInternational
+HonoluluInternational
+AkronCantonRegional
+MetropolitanOaklandInternational
+GeorgeBushIntercontinental/Houston
+RapidCityRegional
+WestchesterCounty
+SouthwestFloridaInternational
+NewportNews/WilliamsburgInternational
+TedStevensAnchorageInternational
+CentralWisconsin
+WacoRegional
+PortColumbusInternational
+McGheeTyson
+RaleighDurhamInternational
+HiloInternational
+LambertSt.LouisInternational
+SyracuseHancockInternational
+SpokaneInternational
+PalmBeachInternational
+TampaInternational
+MetropolitanOaklandInternational
+PalmBeachInternational
+GeorgeBushIntercontinental/Houston
+PhiladelphiaInternational
+NormanY.MinetaSanJoseInternational
+KeyWestInternational
+SloulinFieldInternational
+KahuluiAirport
+GeraldR.FordInternational
+EasterwoodField
+ValleyInternational
+LaGuardia
+HectorInternational
+LongIslandMacArthur
+LongBeachAirport
+PittsburghInternational
+GainesvilleRegional
+RichmondInternational
+LambertSt.LouisInternational
+JacksonHole
+MemphisInternational
+CityofColoradoSpringsMunicipal
+MobileRegional
+PortlandInternationalJetport
+NashvilleInternational
+JacksonvilleInternational
+JohnWayneAirportOrangeCounty
+AugustaRegionalatBushField
+MobileRegional
+JohnWayneAirportOrangeCounty
+WillRogersWorld
+KansasCityInternational
+LosAngelesInternational
+MinneapolisStPaulInternational
+KonaInternationalAirportatKeahole
+JohnWayneAirportOrangeCounty
+Seattle/TacomaInternational
+OntarioInternational
+MarthasVineyardAirport
+BuffaloNiagaraInternational
+TampaInternational
+MinotInternational
+BemidjiRegional
+BirminghamShuttlesworthInternational
+VernalRegional
+RogueValleyInternationalMedford
+MinneapolisStPaulInternational
+OrlandoInternational
+ChicagoOHareInternational
+ManchesterBostonRegional
+JohnF.KennedyInternational
+LosAngelesInternational
+McCarranInternational
+LovellField
+LouisArmstrongNewOrleansInternational
+MinotInternational
+BirminghamShuttlesworthInternational
+PortlandInternationalJetport
+QuadCityInternational
+BatonRougeMetropolitan/RyanField
+CharlestonAFB/International
+AlbanyInternational
+MinneapolisStPaulInternational
+SpringfieldBransonNational
+LihueAirport
+ChicagoOHareInternational
+CedarCityRegional
+GustavusAirport
+MerleKMudholeSmith
+SanDiegoInternational
+FortWayneInternational
+GeneralMitchellInternational
+;
+run;
+
+*Set international/national status of the airport the dummy variable.
+If the airportnames data contains the string;
+data delays3;
+set delays2;
+Intdum = 0;
+if find(Airportnames, 'International') then intdum = 1;
+run;
+
+*create a scatterplot;
+proc sgplot data=delays3;
+scatter y = delayed x = cancelled;
+title DelayedvCancelled;
+run;
+
+proc sgplot data=delays3;
+scatter y = delayed x = diverted;
+title DelayedvDiverted
+run;
+
+proc sgplot data=delays3;
+scatter y = delayed x = ontime;
+title DelayedvOntime
+run;
+
+proc sgplot data=delays3;
+scatter y = delayed x = intdum;
+title DelayedvIntdum
+run;
+
+*correlation matrix;
+proc sgscatter data=delays3;
+matrix cancelled diverted ontime intdum; 
+run;
+
+*calculate vif;
+proc reg data=delays3;
+model delayed=cancelled diverted ontime intdum / vif;
+run;
+
+
+*====================================================================;
+*====================================================================;
+
+
+*Find 3 best models that yield the highest adjusted R^2;
+proc reg data=delays3 plots=none;
+model Delayed = Cancelled Diverted Ontime Intdum / selection=ADJRSQ best=3 RMSE CP;
+run;
+
+*Find 3 best models that yield the lowest Mallow's Cp;
+proc reg data=delays3 plots=none;
+model Delayed = Cancelled Diverted Ontime Intdum / selection=CP best=3 ADJRSQ RMSE;
+run;
+
+*Model resulting from forward selection;
+proc reg data=delays3 plots=none;
+model Delayed = Cancelled Diverted Ontime Intdum / 
+selection=forward SLentry=0.05;
+run;
+
+*Model resulting from stepwise selection;
+proc reg data=delays3 plots=none;
+model Delayed = Cancelled Diverted Ontime Intdum /
+selection=stepwise SLentry=0.05 SLSTAY=0.10;
+run;
+
+*Model resulting from backward selection;
+proc reg data=delays3 plots=none;
+model Delayed = Cancelled Diverted Ontime Intdum /
+selection=backward SLstay=0.05;
+run;
+
+*Anova;
+proc reg data=delays3 plots=none;
+model Delayed = Cancelled Ontime;
+run;
+
+*Residual points. Constant variance assumption violated;
+proc reg data=delays3 plots(only)=(residualbypredicted residualplot qqplot 
+  residualhistogram);
+ model delayed=cancelled ontime;
+ run;
+ 
+*Square root transformation of the model;
+data delays4;
+ set delays3;
+ sqrtdelayed=delayed**0.5;
+run;
+
+
+*====================================================================;
+*====================================================================;
+
+
+*New model;
+proc reg data=delays4;
+model sqrtdelayed=cancelled ontime Intdum;
+run;
+
+
+*Find 3 best models that yield the highest adjusted R^2;
+proc reg data=delays4 plots=none;
+model sqrtdelayed = Cancelled Diverted Ontime Intdum / selection=ADJRSQ best=3 RMSE CP;
+run;
+
+*Find 3 best models that yield the lowest Mallow's Cp;
+proc reg data=delays4 plots=none;
+model sqrtdelayed = Cancelled Diverted Ontime Intdum / selection=CP best=3 ADJRSQ RMSE;
+run;
+
+*Model resulting from forward selection;
+proc reg data=delays4 plots=none;
+model sqrtdelayed = Cancelled Diverted Ontime Intdum / 
+selection=forward SLentry=0.05;
+run;
+
+*Model resulting from stepwise selection;
+proc reg data=delays4 plots=none;
+model sqrtdelayed = Cancelled Diverted Ontime Intdum /
+selection=stepwise SLentry=0.05 SLSTAY=0.10;
+run;
+
+*Model resulting from backward selection;
+proc reg data=delays4 plots=none;
+model sqrtdelayed = Cancelled Diverted Ontime Intdum /
+selection=backward SLstay=0.05;
+run;
+
+*residual plots;
+proc reg data=delays4 plots(only)=(residualbypredicted residualplot qqplot 
+  residualhistogram);
+ model sqrtdelayed=cancelled ontime Intdum;
+ run;
+
+*Influential points;
+proc reg data=delays4 plots(label)=(cooksd rstudentbypredicted
+rstudentbyleverage);
+model sqrtdelayed=cancelled ontime Intdum / r influence;
+run;
+
+*Critical values for deleted studentized reisudal and Cook's distance;
+data teststat;
+t=quantile('T',0.995,100-3-2);
+f=quantile('F',0.5,3+1,100-3-1);
+run;
+proc print data=teststat;
+run;
+
+*Remove the influential points;
+data delays5;
+set delays4;
+if _n_ = 76 then DELETE;
+if _n_ = 42 then DELETE;
+run;
+
+
+*create a scatterplot;
+proc sgplot data=delays4;
+scatter y = delayed x = cancelled;
+title DelayedvCancelled;
+run;
+
+proc sgplot data=delays4;
+scatter y = delayed x = diverted;
+title DelayedvDiverted
+run;
+
+proc sgplot data=delays4;
+scatter y = delayed x = ontime;
+title DelayedvOntime
+run;
+
+proc sgplot data=delays4;
+scatter y = delayed x = intdum;
+title DelayedvIntdum
+run;
+
+
+*====================================================================;
+*====================================================================;
+
+
+*Influential points;
+proc reg data=delays5 plots(label)=(cooksd rstudentbypredicted
+rstudentbyleverage);
+model sqrtdelayed=cancelled ontime Intdum / r influence;
+run;
+
+*Critical values for deleted studentized reisudal and Cook's distance;
+data teststat;
+t=quantile('T',0.995,98-3-2);
+f=quantile('F',0.5,3+1,98-3-1);
+run;
+proc print data=teststat;
+run;
+
+
+*Final model;
+proc reg data=delays5 plots=none;
+model sqrtdelayed = cancelled ontime intdum;
+run;
