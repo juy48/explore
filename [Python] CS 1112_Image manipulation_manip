@@ -1,0 +1,214 @@
+''' Continue exploration of image manipulation '''
+
+from PIL import Image
+
+def cw( original ) :
+    ''' Return a new image that is a 90 degree clockwise rotation
+        of the original '''
+    ow, oh = original.size
+    nw, nh = oh, ow
+    new_image = Image.new('RGB', (nw, nh))
+
+    # fill in every pixel of the new image
+    for nx in range ( 0, nw ):
+        for ny in range ( 0, nh ):
+            nspot = ( nx, ny )
+            ox = ny
+            oy = ( nw - 1 ) - nx
+
+            ospot = ( ox, oy )
+            opixel = original.getpixel( ospot )
+            npixel = opixel
+            new_image.putpixel( nspot, npixel )
+
+    # return the filled in new image
+    return new_image
+    pass
+
+def scale( original, xfactor, yfactor ) :
+    ''' Return a new image that is a scaling of the original by
+        xfactor in the x-dimension and yfactor in the y-dimension '''
+    # get dimensions of the original
+    ow, oh = original.size
+
+    # set dimensions of the copy
+    nw, nh = int(ow*xfactor), int(oh*yfactor)
+
+    # get a new appropriately sized image
+    new_image = Image.new('RGB', (nw, nh))
+
+    # fill in every pixel of the new image
+    for nx in range(0, nw):  # consider every x value for the new image
+        for ny in range(0, nh):  # in tandem with every y value for the image
+
+            # set the spot to be filled in the new image
+            nspot = (nx, ny)
+
+            # determine the corresponding spot in the original to be copied
+            ox = nx//xfactor
+            oy = ny//yfactor
+
+            ospot = (ox, oy)
+
+            # get the pixel at the ospot
+            opixel = original.getpixel(ospot)
+
+            # determine the pixel for the new image
+            npixel = opixel
+
+            # set the nspot in the new image
+            new_image.putpixel(nspot, npixel)
+
+    # return the filled in new image
+    return new_image
+    pass
+
+def pixelate( drawing ) :
+    ''' Return a new image that is a 16 by 16 scaling of a 1/16 by 1/16
+        scaling of the original '''
+    scale_down = scale(drawing, 1/16, 1/16)
+    scale_up = scale(scale_down, 16, 16)
+    return scale_up
+    pass
+
+def dup( original ) :
+    ''' Return a new image that is copy of the original '''
+
+    # get dimensions of the original
+    ow, oh = original.size
+
+    # set dimensions of the copy
+    nw, nh = ow, oh
+
+    # get a new appropriately sized image
+    new_image = Image.new( 'RGB', ( nw, nh ) )
+
+    # fill in every pixel of the new image
+    for nx in range( 0, nw ) :      # consider every x value for the new image
+        for ny in range( 0, nh ) :  # in tandem with every y value for the image
+            
+            # set the spot to be filled in the new image
+            nspot = ( nx ,ny )
+
+            # determine the corresponding spot in the original to be copied
+            ox = nx
+            oy = ny
+
+            ospot = ( ox, oy )
+
+            # get the pixel at the ospot
+            opixel = original.getpixel( ospot )
+
+            # determine the pixel for the new image
+            npixel = opixel
+
+            # set the nspot in the new image
+            new_image.putpixel( nspot, npixel )
+
+    # return the filled in new image
+    return new_image
+
+def mirror( original ) :
+    ''' Return a new image that mirrors the original '''
+    # get dimensions of the original
+    ow, oh = original.size
+
+    # set dimensions of the copy
+    nw, nh = ow, oh
+
+    # get a new appropriately sized image
+    new_image = Image.new( 'RGB', ( nw, nh ) )
+
+    # fill in every pixel of the new image
+    for nx in range( 0, nw ) :      # consider every x value for the new image
+        for ny in range( 0, nh ) :  # in tandem with every y value for the image
+            
+            # set the spot to be filled in the new image
+            nspot = ( nx ,ny )
+
+            # determine the corresponding spot in the original to be copied
+            ox = ( nw - 1 ) - nx
+            oy = ny
+
+            ospot = ( ox, oy )
+
+            # get the pixel at the ospot
+            opixel = original.getpixel( ospot )
+
+            # determine the pixel for the new image
+            npixel = opixel
+
+            # set the nspot in the new image
+            new_image.putpixel( nspot, npixel )
+
+    # return the filled in new image
+    return new_image
+
+def flip( original ) :
+    ''' Return a new image that is a flipping of the original '''
+    # get dimensions of the original
+    ow, oh = original.size
+
+    # set dimensions of the copy
+    nw, nh = ow, oh
+
+    # get a new appropriately sized image
+    new_image = Image.new( 'RGB', ( nw, nh ) )
+
+    # fill in every pixel of the new image
+    for nx in range( 0, nw ) :      # consider every x value for the new image
+        for ny in range( 0, nh ) :  # in tandem with every y value for the image
+            
+            # set the spot to be filled in the new image
+            nspot = ( nx ,ny )
+
+            # determine the corresponding spot in the original to be copied
+            ox = nx
+            oy = (nh - 1 ) - ny
+
+            ospot = ( ox, oy )
+
+            # get the pixel at the ospot
+            opixel = original.getpixel( ospot )
+
+            # determine the pixel for the new image
+            npixel = opixel
+
+            # set the nspot in the new image
+            new_image.putpixel( nspot, npixel )
+
+    # return the filled in new image
+    return new_image
+
+if ( __name__ == '__main__' ) :
+
+    import url
+    import manip
+
+    # get the image
+    link = input( 'Enter picture location: ' )
+    original = url.get_image( link )
+    original.show()
+
+    # manipulate the image and show the effect
+    #du = manip.dup( original );                 du.show();   input( 'Enter when ready: ' )
+    #mi = manip.mirror( original );              mi.show();   input( 'Enter when ready: ' )
+    #fl = manip.flip( original );                fl.show();   input( 'Enter when ready: ' )
+    #cw = manip.cw( original );                  cw.show();   input( 'Enter when ready: ' )
+    #sc = manip.scale( original, 2.00, 2.00 );   sc.show();   input( 'Enter when ready: ' )
+    #sc = manip.scale( original, 0.50, 0.50 );   sc.show();   input( 'Enter when ready: ' )
+    #sc = manip.scale( original, 2.00, 0.50 );   sc.show();   input( 'Enter when ready: ' )
+    #sc = manip.scale( original, 0.50, 2.00 );   sc.show();   input( 'Enter when ready: ' )
+    #pi = manip.pixelate( original );            pi.show();   input( 'Enter when
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
