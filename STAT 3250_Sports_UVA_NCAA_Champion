@@ -1,0 +1,357 @@
+##  This assignment requires data from the file 
+##
+##      'ncaa.csv':  NCAA Men's Tournament Scores, 1985-2019
+##
+##  The organization of the file is fairly clear.  Each record has information
+##  about one game, including the year, the teams, the final score, and each 
+##  team's tournament seed.  All questions refer only to the data in this
+##  file, not to earlier tournaments.
+
+##  Note: The data set is from Data.World, with the addition of the 2019
+##  tournament provided by your dedicated instructor.
+
+import pandas as pd
+import numpy as np
+
+data = pd.read_csv('/Users/mac/Desktop/UVA/2018-2019/STAT 3250/Assignments/ncaa.csv')
+
+## 1.  Find all schools that have won the championship, and make a table that
+##     incluldes the school and number of championships, sorted from most to
+##     least.
+
+# championships
+champs = data[data['Round']==6]
+
+# champions on the left
+champleft = champs.loc[champs['Score']>champs['Score.1'],'Team']
+# champions on the right
+champright = champs.loc[champs['Score']<champs['Score.1'],'Team.1']
+
+# champions on the left and right
+champions = pd.concat([champleft,champright],axis=0)
+
+# tally
+champions.value_counts()
+
+"""
+Duke              5
+North Carolina    4
+Connecticut       4
+Kentucky          3
+Villanova         3
+Louisville        2
+Florida           2
+Kansas            2
+Michigan          1
+Syracuse          1
+Maryland          1
+Arkansas          1
+UNLV              1
+Indiana           1
+Michigan St       1
+Virginia          1
+UCLA              1
+Arizona           1
+"""
+
+## 2.  Find the top-10 schools based on number of tournament appearances.
+##     Make a table that incldes the school name and number of appearances,
+##     sorted from most to least.  Include all that tie for 10th position
+##     if necessary.
+
+# first rounds
+roundones = data[data['Round'] == 1]
+
+# concatenate teams on the left and right
+teams = pd.concat([roundones['Team'],roundones['Team.1']],axis=0)
+
+# tally
+teams.value_counts()[0:10]
+
+"""
+Kansas            34
+Duke              34
+North Carolina    32
+Arizona           32
+Kentucky          30
+Michigan St       29
+Syracuse          28
+Louisville        26
+Texas             26
+Purdue            26
+"""
+
+## 3.  Determine the average tournament seed for each school, then make a
+##     table with the 10 schools that have the lowest average (hence the
+##     best teams). Sort the table from smallest to largest, and include
+##     all that tie for 10th position if necessary.
+
+# concatenate seeds on the left and right
+seeds = pd.concat([roundones['Seed'],roundones['Seed.1']],axis=0)
+
+# seeds and teams
+df3 = pd.concat([teams,seeds],axis=1)
+df3.columns = ['Team','Seed']
+
+# group seed by team
+df3.groupby(['Team'])['Seed'].mean().sort_values()[0:10]
+"""
+Team
+Duke               2.176471
+Kansas             2.500000
+North Carolina     2.718750
+Kentucky           3.566667
+Connecticut        3.950000
+Loyola Illinois    4.000000
+Massachusetts      4.375000
+Syracuse           4.428571
+Arizona            4.437500
+Ohio St            4.450000
+"""
+
+## 4.  Give a table of the average margin of victory by round, sorted by
+##     round in order 1, 2, ....
+
+# create margin by taking the absolute value of the differences between scores
+data['Margin'] = abs(data['Score']-data['Score.1'])
+
+# group margin by round
+data.groupby('Round')['Margin'].mean()
+"""
+Round
+1    12.956250
+2    11.275000
+3     9.917857
+4     9.707143
+5     9.485714
+6     8.257143
+"""
+
+## 5.  Give a table of the percentage of wins by the higher seed by round,
+##     sorted by round in order 1, 2, 3, ...
+
+# make higherwin column and fill with zero
+data['higherwin'] = np.zeros(len(data))
+
+# Fill higherwin with one if left score is greater and left seed is smaller than the rights
+data.loc[(data['Score'] > data['Score.1']) & (data['Seed'] < data['Seed.1']),'higherwin'] = 1
+# Fill higherwin with one if right score is greater and right seed is smaller than the lefts
+data.loc[(data['Score'] < data['Score.1']) & (data['Seed'] > data['Seed.1']),'higherwin'] = 1
+
+# group higherwin by round
+df5 = data.groupby('Round')['higherwin'].mean().reset_index()
+
+pd.concat([df5['Round'],df5['higherwin']*100],axis=1)
+
+"""
+   Round  higherwin
+0      1  74.285714
+1      2  71.250000
+2      3  71.428571
+3      4  55.000000
+4      5  48.571429
+5      6  57.142857
+"""
+
+## 6.  Determine the average seed for all teams in the Final Four for each
+##     year.  Give a table of the top-5 in terms of the lowest average seed
+##     (hence teams thought to be better) that includes the year and the
+##     average, sorted from smallest to largest.
+
+# final four
+finalfour = data[data['Round'] == 5].reset_index()
+
+# concatenate team and seed with team.1 and seed.1
+df6 = pd.DataFrame()
+df6['Year'] = pd.concat([finalfour['Year'],finalfour['Year']],axis=0)
+df6['Team'] = pd.concat([finalfour['Team'],finalfour['Team.1']],axis=0)
+df6['Seed'] = pd.concat([finalfour['Seed'],finalfour['Seed.1']],axis=0)
+
+# group seed by year
+df6.groupby(['Year'])['Seed'].mean().sort_values()[0:8]
+
+"""
+Year
+2008    1.00
+1993    1.25
+2007    1.50
+2001    1.75
+1999    1.75
+1997    1.75
+1991    1.75
+2009    1.75
+"""
+
+## 7.  For the first round, determine the percentage of wins by the higher
+##     seed for the 1-16 games, for the 2-15 games, ..., for the 8-9 games.
+##     Give a table of the above groupings and the percentage, sorted
+##     in the order given.
+
+# make higherwin column and fill with zero
+roundones['higherwin'] = np.zeros(len(roundones))
+# fill higherwin with one if left score is greater than the right
+roundones.loc[roundones['Score'] > roundones['Score.1'],'higherwin'] = 1
+
+# group higher win by seed
+df7 = roundones.groupby('Seed')['higherwin'].mean().reset_index()
+
+# Opponent seed
+df7['Opponent Seed'] = [16,15,14,13,12,11,10,9]
+
+pd.concat([df7['Seed'],df7['Opponent Seed'],df7['higherwin']*100],axis=1)
+
+"""
+   Seed  Opponent Seed  higherwin
+0     1             16  99.285714
+1     2             15  94.285714
+2     3             14  85.000000
+3     4             13  79.285714
+4     5             12  64.285714
+5     6             11  62.857143
+6     7             10  60.714286
+7     8              9  48.571429
+"""
+
+## 8.  For each champion, determine the average margin of victory in all
+##     games played by that team.  Make a table to the top-10 in terms of
+##     average margin, sorted from highest to lowest.  Include all that tie
+##     for 10th position if necessary.
+
+# concatenate left teams with right teams
+df8 = pd.DataFrame()
+df8['Year'] = pd.concat([data['Year'],data['Year']],axis=0)
+df8['Team'] = pd.concat([data['Team'],data['Team.1']],axis=0)
+df8['Margin'] = pd.concat([data['Margin'],data['Margin']],axis=0)
+
+# Champions
+champleft = champs.loc[champs['Score']>champs['Score.1'],['Year','Team']]
+champright = champs.loc[champs['Score']<champs['Score.1'],['Year','Team.1']]
+champright.columns = ['Year','Team']
+champions = pd.concat([champleft,champright],axis=0)
+
+# number of games each year
+sum(df8['Year']==2019)
+# 126
+
+# Repeat champion years and teams 126 times
+years = pd.DataFrame(list(champions['Year'])*126)
+teams = pd.DataFrame(list(champions['Team'])*126)
+
+# champion years and teams
+teamyears = pd.concat([years,teams],axis=1)
+teamyears.columns = ['Year','Champion']
+teamyears = teamyears.sort_values(by='Year').reset_index()[['Year','Champion']]
+
+# sort by year and subset out year, team, and margin
+df8 = df8.sort_values(by='Year').reset_index()[['Year','Team','Margin']]
+
+# add champion column
+df8['Champion'] = teamyears['Champion']
+ 
+# subset out the games winners had and sort by year
+winners = df8[df8['Champion'] == df8['Team']].sort_values(by='Year')
+
+# group margin by year and champion
+winners.groupby(['Year','Champion'])['Margin'].mean().sort_values(ascending=False)[0:10]
+
+"""
+Year  Champion      
+1996  Kentucky          21.500000
+2016  Villanova         20.666667
+2009  North Carolina    20.166667
+1990  UNLV              18.666667
+2018  Villanova         17.666667
+2001  Duke              16.666667
+2013  Louisville        16.166667
+2006  Florida           16.000000
+1993  North Carolina    15.666667
+2015  Duke              15.500000
+"""
+
+## 9.  For each champion, determine the average seed of all opponents of that
+##     team.  Make a table of top-10 in terms of average seed, sorted from 
+##     highest to lowest.  Include all that tie for 10th position if necessary.
+##     Then make a table of the bottom-10, sorted from lowest to highest.
+##     Again include all that tie for 10th position if necessary.
+
+# concatenate left teams with right teams & concatenate right teams with left teams
+df9 = pd.DataFrame()
+df9['Year'] = pd.concat([data['Year'],data['Year']],axis=0)
+df9['Team'] = pd.concat([data['Team'],data['Team.1']],axis=0)
+df9['Opp'] = pd.concat([data['Team.1'],data['Team']],axis=0)
+df9['OppSeed'] = pd.concat([data['Seed.1'],data['Seed']],axis=0)
+
+# Sort by year
+df9 = df9.sort_values(by='Year').reset_index()[['Year','Team','Opp','OppSeed']]
+
+# make a column for each year's champion
+df9['Champion'] = teamyears['Champion']
+
+# games that champions had
+winners = df9[(df9['Champion'] == df9['Team'])]
+
+# group opponent seed with year and champion
+winners.groupby(['Year','Champion'])['OppSeed'].mean().sort_values(ascending=False)[0:11]
+winners.groupby(['Year','Champion'])['OppSeed'].mean().sort_values()[0:11]
+
+
+"""
+Year  Champion      
+1990  UNLV              9.000000
+2013  Louisville        8.500000
+2008  Kansas            8.000000
+2019  Virginia          8.000000
+2006  Florida           7.666667
+1999  Connecticut       7.500000
+1986  Louisville        7.500000
+1994  Arkansas          7.333333
+2000  Michigan St       7.166667
+2005  North Carolina    7.000000
+1987  Indiana           7.000000
+"""
+
+"""
+Year  Champion      
+1985  Villanova         3.333333
+2014  Connecticut       4.666667
+2016  Villanova         4.833333
+1993  North Carolina    5.500000
+2017  North Carolina    5.666667
+2003  Syracuse          5.666667
+2009  North Carolina    5.833333
+2007  Florida           6.000000
+1996  Kentucky          6.000000
+2002  Maryland          6.000000
+1989  Michigan          6.000000
+"""
+
+## 10. Determine the 2019 champion.
+
+# 2019
+df10 = data[data['Year']==2019]
+
+# 2019 championship
+df10 = df10[df10['Round']==6].reset_index()
+
+# if left score was greater, print the left team.
+# Otherwise, print the right team
+if (df10['Score'] > df10['Score.1']).bool():
+    print(df10['Team'])
+else:
+    print(df10['Team.1'])
+
+"""
+0    Virginia
+"""
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
